@@ -1,9 +1,9 @@
 import uuid from 'uuid';
 import { ADD_SERVICE, EDIT_SERVICE, REMOVE_SERVICE } from './actionTypes';
 //--------------------------
-//--Expenses Action creators
+// --Expenses Action creators
 //--------------------------
-//ADD_EXPENSE
+// ADD_EXPENSE
 export const addService = ({ description = '', note = '', amount = 0, createdAt = 0 } = {}) => {
   return {
     type: ADD_SERVICE,
@@ -16,19 +16,19 @@ export const addService = ({ description = '', note = '', amount = 0, createdAt 
     }
   };
 };
-//EDIT EXPENSE
+// EDIT EXPENSE
 export const editService = (id, serviceObj) => {
   return {
     type: EDIT_SERVICE,
-    id, 
+    id,
     serviceObj
   }
 };
 
-//REMOVE EXPENSE
+// REMOVE EXPENSE
 export const removeService = (id) => {
   return {
     type: REMOVE_SERVICE,
     id
-  }
+  };
 };
