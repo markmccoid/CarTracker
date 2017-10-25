@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import 'normalize.css/normalize.css';
+import 'semantic-ui-css/semantic.min.css';
 
 import AppRouter from './routers/AppRouter';
-import 'normalize.css/normalize.css';
+
 import './styles/styles.scss';
 
 import configureStore from './store/configureStore';
@@ -11,6 +13,7 @@ import configureStore from './store/configureStore';
 import * as serviceActions from './actions/services';
 import * as filterActions from './actions/filters';
 import getVisibleServices from './store/selectors/services';
+
 
 const store = configureStore();
 

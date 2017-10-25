@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-
-
+import { Form } from 'semantic-ui-react'
 
 // const nowdate = moment();
 // console.log(nowdate.format('MMM Do, YYYY'));
@@ -13,7 +12,7 @@ class CarForm extends React.Component {
       nickName: props.car ? props.car.nickName : '',
       make: props.car ? props.car.make : '',
       model: props.car ? props.car.model : '',
-      year: props.car ? props.car.year : undefined,
+      year: props.car ? props.car.year : '',
     }
   }
 
@@ -56,7 +55,38 @@ class CarForm extends React.Component {
     return (
       <div>
       {this.state.error && <p>{this.state.error}</p>}
-        <form onSubmit={this.onSubmit}>
+      <Form onSubmit={this.onSubmit}>
+        <Form.Group widths='equal'>
+          <Form.Input 
+            label='Car Nick Name' 
+            placeholder='Nick Name' 
+            value={this.state.nickName} 
+            onChange={this.onNickNameChange}
+          />
+          <Form.Input 
+            label='Make' 
+            placeholder='Make' 
+            value={this.state.make} 
+            onChange={this.onMakeChange}
+          />
+          <Form.Input 
+            label='Model' 
+            placeholder='Model' 
+            value={this.state.model}
+            onChange={this.onModelChange}
+          />
+          <Form.Input 
+            label='Year' 
+            placeholder='Year' 
+            value={this.state.year}
+            onChange={this.onYearChange}
+          />
+          
+        </Form.Group>
+        <Form.Button>Submit</Form.Button>
+      </Form>
+
+        {/* <form onSubmit={this.onSubmit}>
           <input 
             type="text"
             placeholder="Car Nick Name"
@@ -83,7 +113,7 @@ class CarForm extends React.Component {
             onChange={this.onYearChange}
           />
           <button type="submit">Add Car</button>
-        </form>
+        </form> */}
       </div>
     );
   }

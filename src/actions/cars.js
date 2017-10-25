@@ -7,7 +7,7 @@ import { ADD_CAR, EDIT_CAR, REMOVE_CAR } from './actionTypes';
 export const addCar = (carObj = {}) => {
   return {
     type: ADD_CAR,
-    service: {
+    carObj: {
       id: uuid(),
       ...carObj
     }

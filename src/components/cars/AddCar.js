@@ -9,7 +9,8 @@ const AddCar = (props) => {
     <div>
       <h1>Add Car</h1>
       <CarForm onSubmit={(carObj) => {
-        this.props.dispatch(addCar(carObj));
+        console.log(carObj)
+        props.dispatch(addCar(carObj));
       }} />
     </div>
   )
