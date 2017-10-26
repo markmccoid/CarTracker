@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
 import ServiceDashboard from '../components/ServiceDashboard';
 import EditService from '../components/EditService';
@@ -9,9 +10,16 @@ import HelpPage from '../components/HelpPage';
 import NotFound from '../components/NotFound';
 import AddCar from '../components/cars/AddCar';
 
+const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+margin: 25px;
+padding: 10px;
+`;
+
 const AppRouter = () => (
   <BrowserRouter>
-  <div>
+  <Wrapper>
     <Header />
     <Switch>
       <Route exact path="/" component={ServiceDashboard} />
@@ -21,7 +29,7 @@ const AppRouter = () => (
       <Route path="/help" component={HelpPage} />
       <Route component={NotFound} />
     </Switch>
-  </div>
+  </Wrapper>
 </BrowserRouter>
 );
 

@@ -47,8 +47,12 @@ class CarForm extends React.Component {
         year: this.state.year
       }
       this.props.onSubmit(carObj);
-      console.log('submitted', carObj);
-      
+      this.setState(() => ({
+        nickName: '',
+        make: '',
+        model: '',
+        year: ''
+      }));      
     }
   }
   render() {
@@ -62,6 +66,7 @@ class CarForm extends React.Component {
             placeholder='Nick Name' 
             value={this.state.nickName} 
             onChange={this.onNickNameChange}
+            focus
           />
           <Form.Input 
             label='Make' 
