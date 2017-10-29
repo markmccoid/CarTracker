@@ -15,7 +15,10 @@ class CarForm extends React.Component {
       year: props.car ? props.car.year : '',
     }
   }
-
+  componentDidMount() {
+    const focusInput = document.getElementById("inputNickName");
+    focusInput.focus();
+  }
   onNickNameChange = (e) => {
     const nickName = e.target.value;
     this.setState(() => ({nickName}));
@@ -54,19 +57,21 @@ class CarForm extends React.Component {
         year: ''
       }));      
     }
+    const focusInput = document.getElementById("inputNickName");
+    focusInput.focus();
   }
   render() {
     return (
       <div>
       {this.state.error && <p>{this.state.error}</p>}
       <Form onSubmit={this.onSubmit}>
-        <Form.Group widths='equal'>
+        <Form.Group>
           <Form.Input 
             label='Car Nick Name' 
             placeholder='Nick Name' 
             value={this.state.nickName} 
             onChange={this.onNickNameChange}
-            focus
+            id="inputNickName"
           />
           <Form.Input 
             label='Make' 

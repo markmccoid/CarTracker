@@ -2,8 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux'; 
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
+import styled from 'styled-components';
 
 import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
+
+const Wrapper = styled.div`
+  display: flex;
+`;
+const Input = styled.input`
+  padding: 5px;
+  margin: 10px;
+`;
 
 class ServiceListFilters extends React.Component {
   state = {
@@ -19,7 +28,7 @@ class ServiceListFilters extends React.Component {
   render() {
     return (
       <div>
-        <input 
+        <Input 
           type="text" 
           value={this.props.filters.text}
           onChange={(e) => this.props.dispatch(setTextFilter(e.target.value))}

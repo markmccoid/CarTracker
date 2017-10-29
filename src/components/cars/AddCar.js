@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import CarForm from './CarForm';
-import { addCar } from '../../actions/cars';
+import { addCar, editCar } from '../../actions/cars';
 import CarList from './CarList';
 
 const Wrapper = styled.div`
@@ -19,17 +19,18 @@ const AddCar = (props) => {
       <Wrapper>
         <CarForm onSubmit={(carObj) => {
           console.log(carObj)
-          props.dispatch(addCar(carObj));
+          props.addCar(carObj);
           }}
         />
-        <CarList cars={props.cars} />
+        <CarList cars={props.cars} onEditCar={props.editCar} />
       </Wrapper>
     </div>
   )
 };
 
-const MapStateToProps = state => ({
+const mapStateToProps = state => ({
   cars: state.cars
 });
 
-export default connect(MapStateToProps)(AddCar);
+
+export default connect(mapStateToProps, { addCar, editCar })(AddCar);
