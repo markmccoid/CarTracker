@@ -11,6 +11,7 @@ import './styles/styles.scss';
 import configureStore from './store/configureStore';
 
 import * as serviceActions from './actions/services';
+import * as carActions from './actions/cars';
 import * as filterActions from './actions/filters';
 import getVisibleServices from './store/selectors/services';
 
@@ -25,9 +26,11 @@ store.dispatch({
     note: 'note',
     amount: 33,
     createdAt: 0
-  }});
-  store.dispatch(filterActions.setTextFilter('TEST'));
-  console.log(store.getState());
+  }
+});
+store.dispatch(filterActions.setTextFilter('TEST'));
+console.log(store.getState());
+store.dispatch(carActions.startSetCars());
 // store.dispatch(serviceActions.addService({description: 'Water Bill', amount: 12500, createdAt: 0}));
 // store.dispatch(serviceActions.addService({description: 'FPL Bill', amount: 22500, createdAt: 100}));
 // store.dispatch(serviceActions.addService({description: 'Audible', amount: 1995, createdAt: 50}));

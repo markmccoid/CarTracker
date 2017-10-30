@@ -17,7 +17,7 @@ import { Button } from 'semantic-ui-react';
 //Used for regular input and textarea input needs
 const CustomInput = (props) => {
 	//don't want to spread inputType to these components, getting rid of it.
-	let newProps = _.omit(props, ['inputType']);
+	let newProps = _.omit(props, ['inputType', 'onSave']);
 	//let newStyle = props.style;
 
 	if (props.inputType === 'textarea') {
@@ -33,15 +33,15 @@ const CustomInput = (props) => {
     		onKeyPress={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
-						this.handleSave();
+						props.onSave();
 					}
 				}}
 	    />
 	  );
 	}
 };
-const ActionButtons = (props) => {
 
+const ActionButtons = (props) => {
 	return (
 		<div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start"}}>
 			<Button.Group size="mini" compact>
@@ -185,6 +185,7 @@ class EditableFieldSemantic extends React.Component {
 						onBlur={this.cancelEditing}
 						inputType={this.props.inputType}
 						style={{...this.styles.initialText, ...this.styles.inputText}}
+						onSave={this.handleSave}
 					/>
 				<ActionButtons
 					onCancelEditing={this.cancelEditing}

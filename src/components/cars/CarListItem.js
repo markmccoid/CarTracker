@@ -34,7 +34,11 @@ const CarListItem = (props) => {
         <EditableFieldSemantic
           fieldValue={props.car.model}
           inputType="input"
-          onSave={model => props.onEditCar(props.car.id, { model })}
+          onSave={(model) => {
+              console.log('edit', props.car.id, model);
+              props.onEditCar(props.car.id, { model });
+            }
+          }
         />
       </Field>
       <Field>
