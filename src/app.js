@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import 'normalize.css/normalize.css';
 import 'semantic-ui-css/semantic.min.css';
 
-import AppRouter from './routers/AppRouter';
+import AppRouter, { history } from './routers/AppRouter';
 
 import './styles/styles.scss';
 
@@ -14,32 +14,45 @@ import * as serviceActions from './actions/services';
 import * as carActions from './actions/cars';
 import * as filterActions from './actions/filters';
 import getVisibleServices from './store/selectors/services';
-
+import { firebase } from './firebase/firebase';
 
 const store = configureStore();
 
-store.dispatch({
-  type: 'ADD_SERVICE',
-  service: {
-    id: 22,
-    description: 'desc',
-    note: 'note',
-    amount: 33,
-    createdAt: 0
+//store.dispatch(carActions.startSetCars());
+
+
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
+);
+
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById('app'));
+    hasRendered = true;
+  }
+};
+
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // store.dispatch(startSetExpenses()).then(() => {
+    //   renderApp();
+    //   if (history.location.pathname === '/') {
+    //     history.push('/dashboard');
+    //   }
+    // });
+    console.log('logged in');
+    renderApp();
+  } else {
+    renderApp();
+    history.push('/');
   }
 });
-store.dispatch(filterActions.setTextFilter('TEST'));
-console.log(store.getState());
-store.dispatch(carActions.startSetCars());
-// store.dispatch(serviceActions.addService({description: 'Water Bill', amount: 12500, createdAt: 0}));
-// store.dispatch(serviceActions.addService({description: 'FPL Bill', amount: 22500, createdAt: 100}));
-// store.dispatch(serviceActions.addService({description: 'Audible', amount: 1995, createdAt: 50}));
-// store.dispatch(serviceActions.addService({description: 'Money Gone', amount: 45, createdAt: 2050}));
 
-const { services, filters } = store.getState();
-console.log(getVisibleServices(services, filters));
-
-
-ReactDOM.render((<Provider store={store}>
-                    <AppRouter />
-                  </Provider>), document.getElementById('app'));
+// ReactDOM.render((<Provider store={store}>
+//                     <AppRouter />
+//                   </Provider>), document.getElementById('app'));

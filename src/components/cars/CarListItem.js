@@ -41,7 +41,7 @@ const CarListItem = (props) => {
           }
         />
       </Field>
-      <Field>
+      <Field> 
         <EditableFieldSemantic
           fieldValue={props.car.year}
           inputType="input"
