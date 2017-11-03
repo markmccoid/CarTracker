@@ -1,70 +1,59 @@
 import uuid from 'uuid';
 import database from '../firebase/firebase';
+import * as databaseAPI from '../database/firebaseAPI';
+
 import { ADD_CAR, EDIT_CAR, REMOVE_CAR, SET_CARS } from './actionTypes';
 
 //--------------------------
 // --Expenses Action creators
 //--------------------------
 // ADD_EXPENSE
-export const addCar = (carObj = {}) => {
-  return {
-    type: ADD_CAR,
-    carObj
-  };
-};
+export const addCar = (carObj = {}) => ({
+  type: ADD_CAR,
+  carObj,
+});
 
-export const startAddCar = (carObj = {}) => {
-  return (dispatch) => {
-    return database.ref('cars').push(carObj)
-      .then((ref) => {
-        dispatch(addCar({
-          id: ref.key,
-          ...carObj
-        }));
-      });
-  };
+export const startAddCar = (carObj = {}) => (dispatch, getState) => {
+  const { uid } = getState().auth;
+  databaseAPI.addCar(uid, carObj)
+    .then((carid) => {
+      dispatch(addCar({
+        id: carid,
+        ...carObj,
+      }));
+    });
 };
 
 // EDIT EXPENSE
-export const editCar = (id, carObj) => {
-  return {
-    type: EDIT_CAR,
-    id,
-    carObj
-  }
-};
+export const editCar = (id, carObj) => ({
+  type: EDIT_CAR,
+  id,
+  carObj,
+});
 
-export const startEditCar = (id, carObj) => {
-  return (dispatch) => {
-    return database.ref(`cars/${id}`).update(carObj)
-      .then((ref) => {
-        dispatch(editCar(id, carObj));
-      });
-  };
+export const startEditCar = (id, carObj) => (dispatch, getState) => {
+  const { uid } = getState().auth;
+  return databaseAPI.editCar(uid, id, carObj)
+    .then(() => dispatch(editCar(id, carObj)));
 };
 
 // REMOVE EXPENSE
-export const removeCar = (id) => {
-  return {
-    type: REMOVE_CAR,
-    id
-  };
-};
+export const removeCar = id => ({
+  type: REMOVE_CAR,
+  id,
+});
 
 // SET CARS
 export const setCars = cars => ({
   type: SET_CARS,
-  cars
+  cars,
 });
 
 export const startSetCars = () => {
-  return (dispatch) => {
-    return database.ref('cars').once('value')
-      .then((snapshot) => {
-        const carData = snapshot.val();
-        
-        const cars = Object.keys(carData).map(carId => ({id: carId, ...carData[carId]}))
-        console.log(cars);
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    return databaseAPI.loadCars(uid)
+      .then((cars) => {
         dispatch(setCars(cars));
       });
   };
