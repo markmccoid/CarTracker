@@ -7,12 +7,12 @@ import { editService, removeService } from '../actions/services';
 const EditService = (props) => {
   return (
     <div>
-      <ExpenseForm 
+      <ServiceForm
         onSubmit={(serviceObj) => {
-            props.dispatch(editExpense(props.match.params.id, serviceObj));
+            props.dispatch(editService(props.match.params.id, serviceObj));
             props.history.push('/');
           }
-        } 
+        }
         expense={props.expense}
       />
       <button onClick={() => {
@@ -21,7 +21,7 @@ const EditService = (props) => {
           }
         }
       >Remove</button>
-    </div> 
+    </div>
   )
 };
 

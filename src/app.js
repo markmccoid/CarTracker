@@ -14,6 +14,7 @@ import * as serviceActions from './actions/services';
 import * as carActions from './actions/cars';
 import * as filterActions from './actions/filters';
 import getVisibleServices from './store/selectors/services';
+import * as databaseAPI from './database/firebaseAPI';
 import { firebase } from './firebase/firebase';
 
 const store = configureStore();
@@ -37,18 +38,23 @@ const renderApp = () => {
 
 ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
+
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     //--If use is already logged in, make sure to run the login actionTypes
     store.dispatch(authActions.login(user.uid));
-    store.dispatch(carActions.startSetCars()).then(() => {
-      renderApp();
-      if (history.location.pathname === '/') {
-        history.push('/addcar');
-      }
-    });
+    databaseAPI.initializeData(user.uid)
+      .then((data) => {
+        store.dispatch(carActions.setCars(data.carsObj));
+        store.dispatch(serviceActions.setServices(data.servicesObj));
+        renderApp();
+        if (history.location.pathname === '/') {
+          history.push('/addcar');
+        }
+      });
     renderApp();
   } else {
+    store.dispatch(authActions.logout());
     renderApp();
     history.push('/');
   }

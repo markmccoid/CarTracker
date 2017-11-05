@@ -1,21 +1,29 @@
 import uuid from 'uuid';
-import { ADD_SERVICE, EDIT_SERVICE, REMOVE_SERVICE } from './actionTypes';
+import * as databaseAPI from '../database/firebaseAPI';
+import { SET_SERVICES, ADD_SERVICE, EDIT_SERVICE, REMOVE_SERVICE } from './actionTypes';
 //--------------------------
-// --Expenses Action creators
+// --Services Action creators
 //--------------------------
-// ADD_EXPENSE
-export const addService = ({ description = '', note = '', amount = 0, createdAt = 0 } = {}) => {
+// ADD SERVICE
+export const addService = (serviceObj) => {
+  console.log(serviceObj);
   return {
     type: ADD_SERVICE,
-    service: {
-      id: uuid(),
-      description,
-      note,
-      amount,
-      createdAt
-    }
+    service: serviceObj
   };
 };
+
+export const startAddService = (serviceObj) => {
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    databaseAPI.addService(uid, serviceObj)
+      .then(serviceId => dispatch(addService({
+        id: serviceId,
+        ...serviceObj
+      })));
+  };
+};
+
 // EDIT EXPENSE
 export const editService = (id, serviceObj) => {
   return {
@@ -30,5 +38,13 @@ export const removeService = (id) => {
   return {
     type: REMOVE_SERVICE,
     id
+  };
+};
+
+// Set services
+export const setServices = (services) => {
+  return {
+    type: SET_SERVICES,
+    services
   };
 };

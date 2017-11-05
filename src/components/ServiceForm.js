@@ -22,7 +22,7 @@ class ServiceForm extends React.Component {
     }
   }
 
-  onDescriptionChange = (e) => {
+  onDescriptionChange = e => {
     const description = e.target.value;
     this.setState(() => ({description}));
   }
@@ -40,7 +40,7 @@ class ServiceForm extends React.Component {
     if (createdAt) {
       this.setState(() => ({ createdAt }));
     }
-    
+
   }
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ calendarFocused: focused }))
@@ -59,7 +59,7 @@ class ServiceForm extends React.Component {
       }
       this.props.onSubmit(serviceObj);
       console.log('submitted', serviceObj);
-      
+
     }
   }
   render() {
@@ -67,7 +67,7 @@ class ServiceForm extends React.Component {
       <div>
       {this.state.error && <p>{this.state.error}</p>}
         <form onSubmit={this.onSubmit}>
-          <input 
+          <input
             type="text"
             placeholder="Description"
             autoFocus
