@@ -1,5 +1,3 @@
-import uuid from 'uuid';
-import database from '../firebase/firebase';
 import * as databaseAPI from '../database/firebaseAPI';
 
 import { ADD_CAR, EDIT_CAR, REMOVE_CAR, SET_CARS } from './actionTypes';
