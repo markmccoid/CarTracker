@@ -7,11 +7,16 @@ import { startAddService } from '../actions/services';
 const AddService = props => (
   <div>
     <h1>Add Service</h1>
-    <ServiceForm onSubmit={(serviceObj) => {
-      props.dispatch(startAddService(serviceObj));
-      props.history.push('/');
-    }}
+    <ServiceForm
+      cars={props.cars}
+      onSubmit={(serviceObj) => {
+        props.dispatch(startAddService(serviceObj));
+        props.history.push('/');
+      }}
     />
   </div>);
 
-export default connect()(AddService);
+const mapStateToProps = state => ({
+  cars: state.cars
+});
+export default connect(mapStateToProps)(AddService);

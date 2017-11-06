@@ -38,9 +38,10 @@ const renderApp = () => {
 
 ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
-
+//--Check auth state and if logged in set redux login state
+//--Then load initial data and redirect to initial page.
 firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
+  if (user) { //this will be run once every time the user is logged in or out.
     //--If use is already logged in, make sure to run the login actionTypes
     store.dispatch(authActions.login(user.uid));
     databaseAPI.initializeData(user.uid)

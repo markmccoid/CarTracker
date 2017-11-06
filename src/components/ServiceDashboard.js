@@ -9,4 +9,4 @@ const ServiceDashboard = () => (
     <ServiceList />
   </div>);
 
-  export default ServiceDashboard;
+export default ServiceDashboard;

@@ -12,11 +12,10 @@ export default (services, { text, sortBy, startDate, endDate }) => {
 
     //only return true (i.e. include in output) if all match criteria are met
     return textMatch && startDateMatch && endDateMatch;
-  }).sort((a,b) => {
+  }).sort((a, b) => {
     if (sortBy === 'date') {
       return a.createdAt < b.createdAt ? 1 : -1;
-    } else {
-      return a.amount < b.amount ? 1 : -1;
     }
-  })
+    return a.amount < b.amount ? 1 : -1;
+  });
 };

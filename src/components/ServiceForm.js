@@ -14,6 +14,7 @@ class ServiceForm extends React.Component {
 
     this.state = {
       description: props.service ? props.service.description : '',
+      carId: props.carId || '',
       note: props.service ? props.service.note : '',
       amount: props.service ? (props.service.amount / 100).toString() : '',
       createdAt: props.service ? moment(props.service.createdAt) : moment(),
@@ -22,7 +23,13 @@ class ServiceForm extends React.Component {
     }
   }
 
-  onDescriptionChange = e => {
+  onCarChange = (e) => {
+    console.log(e.target.value);
+    const carId = e.target.value;
+    this.setState(() => ({ carId }))
+  }
+
+  onDescriptionChange = (e) => {
     const description = e.target.value;
     this.setState(() => ({description}));
   }
@@ -67,6 +74,11 @@ class ServiceForm extends React.Component {
       <div>
       {this.state.error && <p>{this.state.error}</p>}
         <form onSubmit={this.onSubmit}>
+          <select name="car" onChange={this.onCarChange}>
+            {this.props.cars.map(car => (
+              <option value={car.id}>{car.nickName}</option>
+            ))}
+          </select>
           <input
             type="text"
             placeholder="Description"

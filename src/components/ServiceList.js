@@ -5,17 +5,17 @@ import ServiceListItem from './ServiceListItem';
 import selectVisibleServices from '../store/selectors/services';
 
 
-const ServiceList = (props) => (
+const ServiceList = props => (
   <div>
     <h1>List Of Services</h1>
 
-    {props.services.map(service => {
+    {props.services.map((service) => {
       return <ServiceListItem key={service.id} {...service} />
     })}
 
   </div>
 )
-const mapStateToProps = (state) => (
+const mapStateToProps = state => (
   {
     services: selectVisibleServices(state.services, state.filters)
   }

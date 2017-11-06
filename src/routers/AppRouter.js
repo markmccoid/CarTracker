@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import ServiceDashboard from '../components/ServiceDashboard';
 import EditService from '../components/EditService';
 import AddService from '../components/AddService';
-import Header from '../components/Header';
-import HelpPage from '../components/HelpPage';
 import NotFound from '../components/NotFound';
 import AddCar from '../components/cars/AddCar';
 import Login from '../components/Login';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const Wrapper = styled.div`
 display: flex;
@@ -24,14 +24,12 @@ export const history = createHistory();
 const AppRouter = () => (
   <Router history={history} >
     <Wrapper>
-      <Header />
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/dashboard" component={ServiceDashboard} />
-        <Route path="/addcar" component={AddCar} />
-        <Route path="/create" component={AddService} />
-        <Route path="/edit/:id" component={EditService} />
-        <Route path="/help" component={HelpPage} />
+        <PublicRoute exact path="/" component={Login} />
+        <PrivateRoute path="/dashboard" component={ServiceDashboard} />
+        <PrivateRoute path="/addcar" component={AddCar} />
+        <PrivateRoute path="/create" component={AddService} />
+        <PrivateRoute path="/edit/:id" component={EditService} />
         <Route component={NotFound} />
       </Switch>
     </Wrapper>
