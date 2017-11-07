@@ -7,23 +7,31 @@ import { startEditService, startRemoveService } from '../actions/services';
 const EditService = (props) => {
   return (
     <div>
-      <ServiceForm
-        onSubmit={(serviceObj) => {
-            props.dispatch(startEditService(props.match.params.id, serviceObj));
+      <div className="page-header">
+        <div className="content-container">
+          <h1 className="page-header__title">Edit Service Record</h1>
+        </div>
+      </div>
+      <div className="content-container">
+        <ServiceForm
+          onSubmit={(serviceObj) => {
+              props.dispatch(startEditService(props.match.params.id, serviceObj));
+              props.history.push('/');
+            }
+          }
+          service={props.service}
+          cars={props.cars}
+        />
+        <button className="button button--secondary"
+          onClick={() => {
+            props.dispatch(startRemoveService(props.match.params.id));
             props.history.push('/');
           }
-        }
-        service={props.service}
-        cars={props.cars}
-      />
-      <button onClick={() => {
-          props.dispatch(startRemoveService(props.match.params.id));
-          props.history.push('/');
-        }
-        }
-      >
-        Remove
-      </button>
+          }
+        >
+          Remove Service
+        </button>
+      </div>
     </div>
   );
 };

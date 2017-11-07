@@ -9,7 +9,7 @@ const Login = (props) => {
       <div className="box-layout__box">
         <h1 className="layout__title">Car Tracker</h1>
         <p>Login with Goodle</p>
-        <button className="large_button"
+        <button className="button button--size-medium"
           onClick={props.startLogin}
         >
         Login with Google

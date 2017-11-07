@@ -6,14 +6,20 @@ import { startAddService } from '../actions/services';
 
 const AddService = props => (
   <div>
-    <h1>Add Service</h1>
-    <ServiceForm
-      cars={props.cars}
-      onSubmit={(serviceObj) => {
-        props.dispatch(startAddService(serviceObj));
-        props.history.push('/');
-      }}
-    />
+    <div className="page-header">
+      <div className="content-container">
+        <h1 className="page-header__title">Add Service</h1>
+      </div>
+    </div>
+    <div className="content-container">
+      <ServiceForm
+        cars={props.cars}
+        onSubmit={(serviceObj) => {
+          props.dispatch(startAddService(serviceObj));
+          props.history.push('/');
+        }}
+      />
+    </div>
   </div>);
 
 const mapStateToProps = state => ({

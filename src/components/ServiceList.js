@@ -6,7 +6,7 @@ import selectVisibleServices from '../store/selectors/services';
 
 
 const ServiceList = props => (
-  <div>
+  <div className="content-container">
     <h1>List Of Services</h1>
 
     {props.services.map((service) => {

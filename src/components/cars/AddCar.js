@@ -12,18 +12,22 @@ const Wrapper = styled.div`
 `;
 
 const AddCar = (props) => {
-  
+
   return (
     <div>
-      <h1>Add Car</h1>
-      <Wrapper>
+      <div className="page-header">
+        <div className="content-container">
+          <h1 className="page-header__title">Add Car</h1>
+        </div>
+      </div>
+      <div className="content-container">
         <CarForm onSubmit={(carObj) => {
-          console.log(carObj)
-          props.startAddCar(carObj);
-          }}
-        />
-        <CarList cars={props.cars} onEditCar={props.startEditCar} />
-      </Wrapper>
+            console.log(carObj)
+            props.startAddCar(carObj);
+            }}
+          />
+          <CarList cars={props.cars} onEditCar={props.startEditCar} />
+      </div>
     </div>
   )
 };

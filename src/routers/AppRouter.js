@@ -12,18 +12,10 @@ import Login from '../components/Login';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-const Wrapper = styled.div`
-display: flex;
-flex-direction: column;
-margin: 25px;
-padding: 10px;
-`;
-
 export const history = createHistory();
 
 const AppRouter = () => (
   <Router history={history} >
-    <Wrapper>
       <Switch>
         <PublicRoute exact path="/" component={Login} />
         <PrivateRoute path="/dashboard" component={ServiceDashboard} />
@@ -32,7 +24,6 @@ const AppRouter = () => (
         <PrivateRoute path="/edit/:id" component={EditService} />
         <Route component={NotFound} />
       </Switch>
-    </Wrapper>
   </Router>
 );
 

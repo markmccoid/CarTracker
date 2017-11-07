@@ -1,11 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 100%;
 }
 
 body {
+  color: #333;
   background: white;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: $m-size;
+  font-size: $s-size;
 }
 
 button {

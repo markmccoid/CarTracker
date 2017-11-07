@@ -10,7 +10,7 @@ class ServiceForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      carId: props.service ? props.service.carId : '',
+      carId: props.service ? props.service.carId : this.props.cars[0].id,
       description: props.service ? props.service.description : '',
       serviceProvider: props.service ? props.service.serviceProvider || '' : '',
       note: props.service ? props.service.note : '',
@@ -74,15 +74,16 @@ class ServiceForm extends React.Component {
   }
   render() {
     return (
-      <div>
-        {this.state.error && <p>{this.state.error}</p>}
-        <form onSubmit={this.onSubmit}>
-          <select name="car" onChange={this.onCarChange} value={this.state.carId}>
+        <form className="form" onSubmit={this.onSubmit}>
+          {this.state.error && <p className="form__error">{this.state.error}</p>}
+          <select className="select"
+            name="car" onChange={this.onCarChange} value={this.state.carId}>
             {this.props.cars.map(car => (
               <option key={car.id} value={car.id}>{car.nickName}</option>
             ))}
           </select>
           <input
+            className="text-input"
             type="text"
             placeholder="Description"
             autoFocus
@@ -90,12 +91,14 @@ class ServiceForm extends React.Component {
             onChange={this.onDescriptionChange}
           />
           <input
+            className="text-input"
             type="text"
             placeholder="amount"
             value={this.state.amount}
             onChange={this.onAmountChange}
           />
           <input
+            className="text-input"
             type="text"
             placeholder="Service Provider"
             value={this.state.serviceProvider}
@@ -110,13 +113,15 @@ class ServiceForm extends React.Component {
             isOutsideRange={(day) => false}
           />
           <textarea
+            className="textarea"
             placeholder="add a note"
             value={this.state.note}
             onChange={this.onNoteChange}
           />
-          <button type="submit">Add Service</button>
+          <div>
+            <button className="button" type="submit">Save Service</button>  
+          </div>
         </form>
-      </div>
     );
   }
 }
