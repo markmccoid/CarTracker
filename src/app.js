@@ -46,8 +46,8 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(authActions.login(user.uid));
     databaseAPI.initializeData(user.uid)
       .then((data) => {
-        store.dispatch(carActions.setCars(data.carsObj));
-        store.dispatch(serviceActions.setServices(data.servicesObj));
+        store.dispatch(carActions.setCars(data.carsArray));
+        store.dispatch(serviceActions.setServices(data.servicesArray));
         renderApp();
         if (history.location.pathname === '/') {
           history.push('/addcar');

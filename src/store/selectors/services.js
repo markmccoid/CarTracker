@@ -1,7 +1,8 @@
 import moment from 'moment';
 
 //==Get Visible services
-export default (services, { text, sortBy, startDate, endDate }) => {
+export default (services = [], { text, sortBy, startDate, endDate }) => {
+  console.log(services);
   return services.filter((service) => {
     const createdAtMoment = moment(service.createdAt);
 

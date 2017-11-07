@@ -8,11 +8,15 @@ export const initializeData = (uid) => {
   return database.ref(`users/${uid}`).once('value')
     .then((snapshot) => {
       const { services, cars } = snapshot.val() || { services: {}, cars: {} };
-      console.log(services);
-      console.log(cars);
-      const carsObj = Object.keys(cars).map(carId => ({ id: carId, ...cars[carId] }));
-      const servicesObj = Object.keys(services).map(serviceId => ({ id: serviceId, ...services[serviceId] }));
-      return { servicesObj, carsObj };
+      let servicesArray = [];
+      let carsArray = [];
+      if (cars) {
+        carsArray = Object.keys(cars).map(carId => ({ id: carId, ...cars[carId] }));
+      }
+      if (services) {
+        servicesArray = Object.keys(services).map(serviceId => ({ id: serviceId, ...services[serviceId] }));
+      }
+      return { servicesArray, carsArray };
     });
 };
 
@@ -43,5 +47,12 @@ export const loadCars = uid => database.ref(`users/${uid}/cars`).once('value')
 //============================================
 //-SERVICE Database Calls
 //============================================
+// ADD SERVICE
 export const addService = (uid, serviceObj) => database.ref(`users/${uid}/services`).push(serviceObj)
   .then(ref => ref.key);
+
+// REMOVE SERVICE
+export const removeService = (uid, id) => database.ref(`users/${uid}/services/${id}`).remove();
+
+// EDIT SERVICE
+export const editService = (uid, id, sericeUpdates) => database.ref(`users/${uid}/services/${id}`).update(sericeUpdates);

@@ -2,32 +2,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import ServiceForm from './ServiceForm';
-import { editService, removeService } from '../actions/services';
+import { startEditService, startRemoveService } from '../actions/services';
 
 const EditService = (props) => {
   return (
     <div>
       <ServiceForm
         onSubmit={(serviceObj) => {
-            props.dispatch(editService(props.match.params.id, serviceObj));
+            props.dispatch(startEditService(props.match.params.id, serviceObj));
             props.history.push('/');
           }
         }
-        expense={props.expense}
+        service={props.service}
+        cars={props.cars}
       />
       <button onClick={() => {
-            props.dispatch(removeExpense(props.match.params.id));
-            props.history.push('/');
-          }
+          props.dispatch(startRemoveService(props.match.params.id));
+          props.history.push('/');
         }
-      >Remove</button>
+        }
+      >
+        Remove
+      </button>
     </div>
-  )
+  );
 };
 
 const mapStateToProps = (state, props) => {
   return {
-    expense: state.expenses.find((expense) => expense.id === props.match.params.id)
-  }
-}
+    service: state.services.find(service => service.id === props.match.params.id),
+    cars: state.cars
+  };
+};
+
 export default connect(mapStateToProps)(EditService);

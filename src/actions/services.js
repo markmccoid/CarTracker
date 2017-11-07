@@ -33,11 +33,28 @@ export const editService = (id, serviceObj) => {
   }
 };
 
+export const startEditService = (id, serviceObj) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    databaseAPI.editService(uid, id, serviceObj)
+      .then(() => dispatch(editService(id, serviceObj)));
+  };
+};
+
 // REMOVE EXPENSE
 export const removeService = (id) => {
   return {
     type: REMOVE_SERVICE,
     id
+  };
+};
+
+export const startRemoveService = (id) => {
+  console.log(`startRemoveService ${id}`)
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    databaseAPI.removeService(uid, id)
+      .then(() => dispatch(removeService(id)));
   };
 };
 

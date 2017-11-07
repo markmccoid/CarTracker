@@ -4,79 +4,82 @@ import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
-
-
 // const nowdate = moment();
 // console.log(nowdate.format('MMM Do, YYYY'));
 class ServiceForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      carId: props.service ? props.service.carId : '',
       description: props.service ? props.service.description : '',
-      carId: props.carId || '',
+      serviceProvider: props.service ? props.service.serviceProvider || '' : '',
       note: props.service ? props.service.note : '',
       amount: props.service ? (props.service.amount / 100).toString() : '',
       createdAt: props.service ? moment(props.service.createdAt) : moment(),
       calendarFocused: false,
       error: undefined
-    }
+    };
   }
 
   onCarChange = (e) => {
-    console.log(e.target.value);
     const carId = e.target.value;
-    this.setState(() => ({ carId }))
+    this.setState(() => ({ carId }));
   }
 
   onDescriptionChange = (e) => {
     const description = e.target.value;
-    this.setState(() => ({description}));
+    this.setState(() => ({ description }));
+  }
+  onServiceProviderChange = (e) => {
+    const serviceProvider = e.target.value;
+    this.setState(() => ({ serviceProvider }));
   }
   onNoteChange = (e) => {
     const note = e.target.value;
-    this.setState(() => ({note}));
+    this.setState(() => ({ note }));
   }
   onAmountChange = (e) => {
     const amount = e.target.value;
     if (!amount || amount.match(/^\d*(\.\d{0,2})?$/)) {
-      this.setState(() => ({amount}))
+      this.setState(() => ({ amount }));
     }
   }
   onDateChange = (createdAt) => {
     if (createdAt) {
       this.setState(() => ({ createdAt }));
     }
+  }
 
-  }
   onFocusChange = ({ focused }) => {
-    this.setState(() => ({ calendarFocused: focused }))
+    this.setState(() => ({ calendarFocused: focused }));
   }
+
   onSubmit = (e) => {
     e.preventDefault();
     if (!this.state.description || !this.state.amount) {
-      this.setState(() => ({error: 'Please enter a description and an amount'}))
+      this.setState(() => ({ error: 'Please enter a description and an amount' }));
     } else {
-      this.setState(() => ({error: undefined}))
+      this.setState(() => ({ error: undefined }));
       const serviceObj = {
         description: this.state.description,
         amount: parseFloat(this.state.amount, 10) * 100,
         note: this.state.note,
-        createdAt: this.state.createdAt.valueOf()
-      }
+        serviceProvider: this.state.serviceProvider,
+        createdAt: this.state.createdAt.valueOf(),
+        carId: this.state.carId
+      };
       this.props.onSubmit(serviceObj);
       console.log('submitted', serviceObj);
-
     }
   }
   render() {
     return (
       <div>
-      {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && <p>{this.state.error}</p>}
         <form onSubmit={this.onSubmit}>
-          <select name="car" onChange={this.onCarChange}>
+          <select name="car" onChange={this.onCarChange} value={this.state.carId}>
             {this.props.cars.map(car => (
-              <option value={car.id}>{car.nickName}</option>
+              <option key={car.id} value={car.id}>{car.nickName}</option>
             ))}
           </select>
           <input
@@ -92,6 +95,12 @@ class ServiceForm extends React.Component {
             value={this.state.amount}
             onChange={this.onAmountChange}
           />
+          <input
+            type="text"
+            placeholder="Service Provider"
+            value={this.state.serviceProvider}
+            onChange={this.onServiceProviderChange}
+          />
           <SingleDatePicker
             date={this.state.createdAt}
             onDateChange={this.onDateChange}
@@ -104,8 +113,7 @@ class ServiceForm extends React.Component {
             placeholder="add a note"
             value={this.state.note}
             onChange={this.onNoteChange}
-          >
-          </textarea>
+          />
           <button type="submit">Add Service</button>
         </form>
       </div>
