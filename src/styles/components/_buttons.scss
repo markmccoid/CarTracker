@@ -8,6 +8,11 @@
   border: 1px solid darken(#1797cc, 5%);
 }
 
+.button--link {
+  @extend .button;
+  cursor: pointer;
+  text-decoration: none;
+}
 .button--secondary {
   background: #888;
   border: 1px solid darken(#888, 5%);

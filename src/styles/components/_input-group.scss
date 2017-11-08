@@ -13,6 +13,7 @@
 
 .input-group__item {
   margin-bottom: .5rem;
+  width: 100%;
   @media (min-width: $desktop-breakpoint) {
     margin: 0 .5rem 0 0;
   }

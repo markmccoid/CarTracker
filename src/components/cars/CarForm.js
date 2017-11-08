@@ -13,6 +13,8 @@ class CarForm extends React.Component {
       make: props.car ? props.car.make : '',
       model: props.car ? props.car.model : '',
       year: props.car ? props.car.year : '',
+      licensePlate: props.car ? props.car.licensePlate || '' : '',
+      VIN: props.car ? props.car.VIN || '' : ''
     }
   }
   componentDidMount() {
@@ -37,6 +39,25 @@ class CarForm extends React.Component {
       this.setState(() => ({year}))
     }
   }
+  onVINChange = (e) => {
+    const VIN = e.target.value.toUpperCase();
+    this.setState(() => ({ VIN }));
+  }
+  onLicenseChange = (e) => {
+    const licensePlate = e.target.value.toUpperCase();
+    this.setState(() => ({ licensePlate }));
+  }
+  clearState = () => {
+
+    this.setState(() => ({
+      nickName: '',
+      make: '',
+      model: '',
+      year: '',
+      licensePlate: '',
+      VIN: ''
+    }));
+  }
   onSubmit = (e) => {
     e.preventDefault();
     if (!this.state.nickName || !this.state.make || !this.state.model) {
@@ -47,84 +68,81 @@ class CarForm extends React.Component {
         nickName: this.state.nickName,
         make: this.state.make,
         model: this.state.model,
-        year: this.state.year
+        year: this.state.year,
+        licensePlate: this.state.licensePlate,
+        VIN: this.state.VIN
       }
       this.props.onSubmit(carObj);
-      this.setState(() => ({
-        nickName: '',
-        make: '',
-        model: '',
-        year: ''
-      }));      
+      this.clearState();
     }
     const focusInput = document.getElementById("inputNickName");
     focusInput.focus();
   }
   render() {
     return (
-      <div>
-      {this.state.error && <p>{this.state.error}</p>}
-      <Form onSubmit={this.onSubmit}>
-        <Form.Group>
-          <Form.Input 
-            label='Car Nick Name' 
-            placeholder='Nick Name' 
-            value={this.state.nickName} 
-            onChange={this.onNickNameChange}
-            id="inputNickName"
-          />
-          <Form.Input 
-            label='Make' 
-            placeholder='Make' 
-            value={this.state.make} 
-            onChange={this.onMakeChange}
-          />
-          <Form.Input 
-            label='Model' 
-            placeholder='Model' 
-            value={this.state.model}
-            onChange={this.onModelChange}
-          />
-          <Form.Input 
-            label='Year' 
-            placeholder='Year' 
-            value={this.state.year}
-            onChange={this.onYearChange}
-          />
-          
-        </Form.Group>
-        <Form.Button>Submit</Form.Button>
-      </Form>
-
-        {/* <form onSubmit={this.onSubmit}>
-          <input 
-            type="text"
-            placeholder="Car Nick Name"
-            autoFocus
-            value={this.state.nickName}
-            onChange={this.onNickNameChange}
-          />
-          <input
-            type="text"
-            placeholder="Make"
-            value={this.state.make}
-            onChange={this.onMakeChange}
-          />
-          <input
-            type="text"
-            placeholder="Model"
-            value={this.state.model}
-            onChange={this.onModelChange}
-          />
-          <input
-            type="text"
-            placeholder="Year"
-            value={this.state.year}
-            onChange={this.onYearChange}
-          />
-          <button type="submit">Add Car</button>
-        </form> */}
-      </div>
+      <form className="form" onSubmit={this.onSubmit}>
+        {this.state.error && <p>{this.state.error}</p>}
+        <div className="input-group">
+          <div className="input-group__item">
+            <input className="text-input"
+              label='Car Nick Name'
+              placeholder='Nick Name'
+              value={this.state.nickName}
+              onChange={this.onNickNameChange}
+              id="inputNickName"
+            />
+          </div>
+        </div>
+        <div className="input-group">
+          <div className="input-group__item" style={{flexGrow: 2}}>
+            <input className="text-input"
+              label='Make'
+              placeholder='Make'
+              value={this.state.make}
+              onChange={this.onMakeChange}
+            />
+          </div>
+          <div className="input-group__item" style={{flexGrow: 2}}>
+            <input className="text-input"
+              label='Model'
+              placeholder='Model'
+              value={this.state.model}
+              onChange={this.onModelChange}
+            />
+          </div>
+          <div className="input-group__item">
+            <input className="text-input"
+              label='Year'
+              placeholder='Year'
+              value={this.state.year}
+              onChange={this.onYearChange}
+            />
+          </div>
+        </div>
+        <div className="input-group">
+          <div className="input-group__item">
+            <input className="text-input"
+              placeholder='License Plate'
+              value={this.state.licensePlate}
+              onChange={this.onLicenseChange}
+            />
+          </div>
+          <div className="input-group__item">
+            <input className="text-input"
+              placeholder='VIN Number'
+              value={this.state.VIN}
+              onChange={this.onVINChange}
+            />
+          </div>
+        </div>
+        <div className="input-group" style={{justifyContent: "space-between", marginRight: ".5rem"}}>
+          <button className="button" type="submit">Save Car</button>
+          <button className="button" onClick={(e) => {
+            e.preventDefault();
+            this.clearState();
+          }}>Clear</button>
+        </div>
+      </form>
     );
   }
 }
