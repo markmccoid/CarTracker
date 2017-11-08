@@ -4,7 +4,9 @@ import ServiceListFilters from './ServiceListFilters';
 
 const ServiceDashboard = () => (
   <div>
-    <h1>Service Dashboard</h1>
+    <div className="content-container">
+      <h1>Service Dashboard</h1>
+    </div>
     <ServiceListFilters />
     <ServiceList />
   </div>);

@@ -83,13 +83,27 @@ class CarForm extends React.Component {
       <form className="form" onSubmit={this.onSubmit}>
         {this.state.error && <p>{this.state.error}</p>}
         <div className="input-group">
-          <div className="input-group__item">
+          <div className="input-group__item" style={{flexGrow: 4}}>
             <input className="text-input"
               label='Car Nick Name'
               placeholder='Nick Name'
               value={this.state.nickName}
               onChange={this.onNickNameChange}
               id="inputNickName"
+            />
+          </div>
+          <div className="input-group__item" style={{flexGrow: 2}}>
+            <input className="text-input"
+              placeholder='License Plate'
+              value={this.state.licensePlate}
+              onChange={this.onLicenseChange}
+            />
+          </div>
+          <div className="input-group__item" style={{flexGrow: 2}}>
+            <input className="text-input"
+              placeholder='VIN Number'
+              value={this.state.VIN}
+              onChange={this.onVINChange}
             />
           </div>
         </div>
@@ -116,22 +130,6 @@ class CarForm extends React.Component {
               placeholder='Year'
               value={this.state.year}
               onChange={this.onYearChange}
-            />
-          </div>
-        </div>
-        <div className="input-group">
-          <div className="input-group__item">
-            <input className="text-input"
-              placeholder='License Plate'
-              value={this.state.licensePlate}
-              onChange={this.onLicenseChange}
-            />
-          </div>
-          <div className="input-group__item">
-            <input className="text-input"
-              placeholder='VIN Number'
-              value={this.state.VIN}
-              onChange={this.onVINChange}
             />
           </div>
         </div>
