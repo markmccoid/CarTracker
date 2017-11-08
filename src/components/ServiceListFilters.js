@@ -28,7 +28,9 @@ class ServiceListFilters extends React.Component {
     return (
       <div className="content-container">
         <div className="input-group">
-          <div className="input-group__item">CAR Filter</div>
+          <div className="input-group__item">
+
+          </div>
           <div className="input-group__item">
             <Input
               className="text-input"
@@ -75,7 +77,8 @@ class ServiceListFilters extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    filters: state.filters
+    filters: state.filters,
+    cars: state.cars
   }
 }
 export default connect(mapStateToProps)(ServiceListFilters);
