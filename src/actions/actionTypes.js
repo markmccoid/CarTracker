@@ -20,3 +20,4 @@ export const SET_START_DATE = 'SET_START_DATE';
 export const SORTBY_AMOUNT = 'SORTBY_AMOUNT';
 export const SORTBY_DATE = 'SORTBY_DATE';
 export const SET_TEXT_FILTER = 'SET_TEXT_FILTER';
+export const SET_CAR_FILTER = 'SET_CAR_FILTER';

@@ -4,7 +4,7 @@ import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import styled from 'styled-components';
 
-import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
+import { setTextFilter, setCarFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,7 +29,17 @@ class ServiceListFilters extends React.Component {
       <div className="content-container">
         <div className="input-group">
           <div className="input-group__item">
-
+            <select
+              className="select"
+              value={this.props.filters.carIdFilter}
+              onChange={(e) => {
+                this.props.dispatch(setCarFilter(e.target.value));
+              }}
+            >
+              {this.props.cars.map((car) => (
+                <option key={car.id} value={car.id}>{car.nickName}</option>
+              ))}
+            </select>
           </div>
           <div className="input-group__item">
             <Input
@@ -78,7 +88,7 @@ class ServiceListFilters extends React.Component {
 const mapStateToProps = (state) => {
   return {
     filters: state.filters,
-    cars: state.cars
+    cars: [ { carId: '', nickName: '' }, ...state.cars]
   }
 }
 export default connect(mapStateToProps)(ServiceListFilters);
