@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 
 import ServiceListItem from './ServiceListItem';
 import selectVisibleServices from '../store/selectors/services';
-
+import ServiceSummary from './ServiceSummary';
 
 const ServiceList = props => (
   <div className="content-container">
+    <ServiceSummary visibleServices={props.services} />
     <div className="list-header">
       <div className="show-for-mobile">Services</div>
       <div className="show-for-desktop">Service</div>
