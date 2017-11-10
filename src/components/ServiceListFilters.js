@@ -53,6 +53,7 @@ class ServiceListFilters extends React.Component {
           <div className="input-group__item">
             <select
               className="select"
+              key={this.props.filters.sortBy}
               value={this.props.filters.sortBy}
               onChange={(e) => {
               console.log(e.target.value);

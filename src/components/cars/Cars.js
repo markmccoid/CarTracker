@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import CarForm from './CarForm';
-import { startAddCar, startEditCar } from '../../actions/cars';
+import { startAddCar, startEditCar, startRemoveCar } from '../../actions/cars';
 import CarList from './CarList';
 
 const Wrapper = styled.div`
@@ -15,51 +15,53 @@ class Cars extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      updateJSX: false
+      addEditCar: ''
     }
+    let addCarJSX = null;
+    let editCarJSX = null;
   }
-  render() {
-    let carFormJSX =  <CarForm
+  editCar = (carId) => {
+    this.setState(() => ({ addEditCar: 'edit' }));
+    this.editCarJSX = (
+      <CarForm
+        car={this.props.cars.find(car => car.id === carId)}
+        onSubmit={(carObj) => {
+          this.props.startEditCar(carId, carObj);
+          this.setState(() => ({ addEditCar: null }));
+        }}
+        onCancel={this.cancelCarAction}
+      />);
+  }
+  cancelCarAction = () => this.setState(() => ({ addEditCar: '' }));
 
-            onSubmit={(carObj) => {
-              this.props.startAddCar(carObj);
-              carFormJSX = undefined;
-            }}
-          />;
-    const editCar = (carId) => {
-      console.log(`Editing Car ${carId}`);
-      carFormJSX = (
-        <CarForm
-          car={this.props.cars.find(car => car.id === carId)}
-          onSubmit={(carObj) => {
-            this.props.startEditCar(carId, carObj);
-            carFormJSX = undefined;
-          }}
-        />);
-        this.setState({updateJSX: true});
-    }
-    const addCar = () => {
-      console.log('adding car');
-      carFormJSX = (
-        <CarForm
+  render() {
+    this.addCarJSX = <CarForm
           onSubmit={(carObj) => {
             this.props.startAddCar(carObj);
-            carFormJSX = undefined;
+            this.setState(() => ({ addEditCar: '' }))
           }}
-        />);
-        this.setState({updateJSX: true});
-    }
+          onCancel={this.cancelCarAction}
+        />;
+
     return (
       <div>
         <div className="page-header">
-          <div className="content-container">
+          <div className="content-container" style={{display:"flex", justifyContent: "space-between"}}>
             <h1 className="page-header__title">Cars</h1>
+            <button className="button" onClick={() => {this.setState(() => ({ addEditCar: 'add' }))}}>Add Car</button>
           </div>
         </div>
         <div className="content-container">
-          <button className="button" onClick={addCar}>Add Car</button>
-          {carFormJSX}
-          <CarList cars={this.props.cars} onEditCar={editCar} />
+
+            {this.state.addEditCar === 'add' ? this.addCarJSX :
+             this.state.addEditCar === 'edit' ? this.editCarJSX :
+             null
+            }
+          <CarList
+            cars={this.props.cars}
+            onEditCar={this.editCar}
+            onRemoveCar={this.props.startRemoveCar}
+          />
         </div>
       </div>
     )
@@ -71,4 +73,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { startAddCar, startEditCar })(Cars);
+export default connect(mapStateToProps, { startAddCar, startEditCar, startRemoveCar })(Cars);

@@ -139,6 +139,8 @@ class CarForm extends React.Component {
             e.preventDefault();
             this.clearState();
           }}>Clear</button>
+          <button className="button" onClick={this.props.onCancel}>Cancel</button>
+
         </div>
       </form>
     );

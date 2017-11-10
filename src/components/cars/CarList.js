@@ -5,7 +5,7 @@ const CarList = (props) => {
   return (
     <div>
       <h2>List of Cars</h2>
-      {props.cars.map(car => <CarListItem key={car.id} car={car} onEditCar={props.onEditCar} />
+      {props.cars.map(car => <CarListItem key={car.id} car={car} onEditCar={props.onEditCar} onRemoveCar={props.onRemoveCar} />
       )}
     </div>
   );

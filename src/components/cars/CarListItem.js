@@ -4,21 +4,47 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
-
+  border: 1px solid #ccc;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
 `;
 
 const Field = styled.div`
   width: 100%;
   margin: 10px;
 `;
+const CarInfo = styled.div`
+  font-size: 1.2rem;
+  font-weight: 500;
+`;
+const FlexRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
 
 const CarListItem = (props) => {
   return (
       <Wrapper>
-        {props.car.nickName}
-        <button onClick={() => props.onEditCar(props.car.id)}>
-          Edit
-        </button>
+        <Field>
+          <CarInfo>{props.car.nickName} - {props.car.year} {props.car.make} {props.car.model}</CarInfo>
+          <CarInfo>{props.car.licensePlate} - {props.car.VIN}</CarInfo>
+        </Field>
+        <Field>
+          <FlexRight>
+            <button
+              className="button button--size-xsmall"
+              style={{marginRight: "10px"}}
+              onClick={() => props.onEditCar(props.car.id)}>
+              Edit
+            </button>
+            <button
+              className="button button--size-xsmall"
+              onClick={() =>{ console.log('remove'); props.onRemoveCar(props.car.id)}}>
+              Remove
+            </button>
+          </FlexRight>
+        </Field>
       </Wrapper>
   );
 };

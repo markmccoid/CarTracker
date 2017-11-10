@@ -41,6 +41,15 @@ export const removeCar = id => ({
   id,
 });
 
+export const startRemoveCar = id => {
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    console.log('removing car', id)
+    return databaseAPI.removeCar(uid, id)
+      .then(() => dispatch(removeCar(id)));
+  };
+};
+
 // SET CARS
 export const setCars = cars => ({
   type: SET_CARS,

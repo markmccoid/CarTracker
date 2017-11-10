@@ -11,8 +11,7 @@ const Header = props => (
           <h1 >Car Tracker</h1>
         </Link>
         <NavLink className="button" to="/create" activeClassName="is-active">Add Service </NavLink>
-        <NavLink className="button" to="/addcar" activeClassName="is-active">Add Car </NavLink>
-        <NavLink className="button" to="/help" activeClassName="is-active">Help </NavLink>
+        <NavLink className="button" to="/addcar" activeClassName="is-active">Cars </NavLink>
         <button className="button button--style-blank"
           onClick={props.startLogout}>Logout</button>
       </div>

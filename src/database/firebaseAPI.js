@@ -36,6 +36,9 @@ export const addCar = (uid, carObj) => database.ref(`users/${uid}/cars`).push(ca
 //EDIT CAR
 export const editCar = (uid, id, carObj) => database.ref(`users/${uid}/cars/${id}`).update(carObj);
 
+//REMOVE CAR
+export const removeCar = (uid, id) => database.ref(`users/${uid}/cars/${id}`).remove();
+
 //LOAD CARS
 export const loadCars = uid => database.ref(`users/${uid}/cars`).once('value')
   .then((snapshot) => {
