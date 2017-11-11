@@ -7,6 +7,12 @@
   }
 }
 
+.input-group {
+  display: flex;
+  >* {
+    margin-right: $s-size;
+  }
+}
 .form__error {
   color: red;
   margin: 0 0 $m-size 0;

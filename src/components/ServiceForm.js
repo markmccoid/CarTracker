@@ -76,50 +76,57 @@ class ServiceForm extends React.Component {
     return (
         <form className="form" onSubmit={this.onSubmit}>
           {this.state.error && <p className="form__error">{this.state.error}</p>}
-          <select className="select"
-            name="car" onChange={this.onCarChange} value={this.state.carId}>
-            {this.props.cars.map(car => (
-              <option key={car.id} value={car.id}>{car.nickName}</option>
-            ))}
-          </select>
-          <input
-            className="text-input"
-            type="text"
-            placeholder="Description"
-            autoFocus
-            value={this.state.description}
-            onChange={this.onDescriptionChange}
-          />
-          <input
-            className="text-input"
-            type="text"
-            placeholder="amount"
-            value={this.state.amount}
-            onChange={this.onAmountChange}
-          />
-          <input
-            className="text-input"
-            type="text"
-            placeholder="Service Provider"
-            value={this.state.serviceProvider}
-            onChange={this.onServiceProviderChange}
-          />
-          <SingleDatePicker
-            date={this.state.createdAt}
-            onDateChange={this.onDateChange}
-            focused={this.state.calendarFocused}
-            onFocusChange={this.onFocusChange}
-            numberOfMonths={1}
-            isOutsideRange={(day) => false}
-          />
-          <textarea
-            className="textarea"
-            placeholder="add a note"
-            value={this.state.note}
-            onChange={this.onNoteChange}
-          />
+
+          <div className="input-group">
+            <select className="select"
+              name="car" onChange={this.onCarChange} value={this.state.carId}>
+              {this.props.cars.map(car => (
+                <option key={car.id} value={car.id}>{car.nickName}</option>
+              ))}
+            </select>
+            <input
+              className="text-input"
+              type="text"
+              placeholder="Description"
+              autoFocus
+              value={this.state.description}
+              onChange={this.onDescriptionChange}
+            />
+            <input
+              className="text-input"
+              type="text"
+              placeholder="amount"
+              value={this.state.amount}
+              onChange={this.onAmountChange}
+            />
+          </div>
+          <div className="input-group">
+            <SingleDatePicker
+              date={this.state.createdAt}
+              onDateChange={this.onDateChange}
+              focused={this.state.calendarFocused}
+              onFocusChange={this.onFocusChange}
+              numberOfMonths={1}
+              isOutsideRange={(day) => false}
+            />
+            <input
+              className="text-input"
+              type="text"
+              placeholder="Service Provider"
+              value={this.state.serviceProvider}
+              onChange={this.onServiceProviderChange}
+            />
+          </div>
+          <div className="input-group">
+            <textarea
+              className="textarea"
+              placeholder="add a note"
+              value={this.state.note}
+              onChange={this.onNoteChange}
+            />
+          </div>
           <div>
-            <button className="button" type="submit">Save Service</button>  
+            <button className="button" type="submit">Save Service</button>
           </div>
         </form>
     );
