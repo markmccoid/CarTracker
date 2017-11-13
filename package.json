@@ -13,6 +13,7 @@
     "testw": "jest --watch"
   },
   "dependencies": {
+    "antd": "^2.13.10",
     "babel-cli": "6.24.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.0",

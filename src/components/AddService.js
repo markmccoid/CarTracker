@@ -13,6 +13,7 @@ const AddService = props => (
     </div>
     <div className="content-container">
       <ServiceForm
+        descArray={props.descArray}
         cars={props.cars}
         onSubmit={(serviceObj) => {
           props.dispatch(startAddService(serviceObj));
@@ -23,6 +24,7 @@ const AddService = props => (
   </div>);
 
 const mapStateToProps = state => ({
+  descArray: Object.keys(state.services).map((key) => state.services[key].description),
   cars: state.cars
 });
 export default connect(mapStateToProps)(AddService);

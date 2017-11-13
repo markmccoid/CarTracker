@@ -10,7 +10,7 @@ class ServiceForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      carId: props.service ? props.service.carId : this.props.cars[0].id,
+      carId: props.service ? props.service.carId : props.cars.length > 0 ? props.cars[0].id : 0,
       description: props.service ? props.service.description : '',
       serviceProvider: props.service ? props.service.serviceProvider || '' : '',
       note: props.service ? props.service.note : '',
@@ -22,12 +22,23 @@ class ServiceForm extends React.Component {
   }
 
   onCarChange = (e) => {
-    const carId = e.target.value;
+    const carId = e; //e.target.value;
     this.setState(() => ({ carId }));
   }
 
   onDescriptionChange = (e) => {
     const description = e.target.value;
+    this.setState(() => ({ description }));
+  }
+  onDescriptionChange2 = (e) => {
+    const description = e.target.value;
+   // const descArray = Object.keys(this.props.service).map((key) => this.props.service[key].description);
+    console.log(this.props.descArray);
+    const expr = /description/;
+    const foundItem = this.props.descArray.find((desc) => description.match(expr))
+    console.log(foundItem)
+    this.test.selectionStart = 1;
+    this.test.selectEnd = 2;
     this.setState(() => ({ description }));
   }
   onServiceProviderChange = (e) => {
@@ -78,12 +89,30 @@ class ServiceForm extends React.Component {
           {this.state.error && <p className="form__error">{this.state.error}</p>}
 
           <div className="input-group">
-            <select className="select"
+            <select className="select" 
               name="car" onChange={this.onCarChange} value={this.state.carId}>
               {this.props.cars.map(car => (
                 <option key={car.id} value={car.id}>{car.nickName}</option>
               ))}
             </select>
+            <SingleDatePicker
+              date={this.state.createdAt}
+              onDateChange={this.onDateChange}
+              focused={this.state.calendarFocused}
+              onFocusChange={this.onFocusChange}
+              numberOfMonths={1}
+              isOutsideRange={(day) => false}
+            />
+            <input
+              className="text-input"
+              type="text"
+              placeholder="amount"
+              value={this.state.amount}
+              onChange={this.onAmountChange}
+            />
+          </div>
+          <div className="input-group">
+           
             <input
               className="text-input"
               type="text"
@@ -95,19 +124,11 @@ class ServiceForm extends React.Component {
             <input
               className="text-input"
               type="text"
-              placeholder="amount"
-              value={this.state.amount}
-              onChange={this.onAmountChange}
-            />
-          </div>
-          <div className="input-group">
-            <SingleDatePicker
-              date={this.state.createdAt}
-              onDateChange={this.onDateChange}
-              focused={this.state.calendarFocused}
-              onFocusChange={this.onFocusChange}
-              numberOfMonths={1}
-              isOutsideRange={(day) => false}
+              placeholder="Description"
+              autoFocus
+              ref={(input) => this.test = input}
+              value={this.state.description}
+              onChange={this.onDescriptionChange2}
             />
             <input
               className="text-input"
