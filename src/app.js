@@ -16,6 +16,7 @@ import * as filterActions from './actions/filters';
 import getVisibleServices from './store/selectors/services';
 import * as databaseAPI from './database/firebaseAPI';
 import { firebase } from './firebase/firebase';
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
 
@@ -36,7 +37,7 @@ const renderApp = () => {
   }
 };
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 //--Check auth state and if logged in set redux login state
 //--Then load initial data and redirect to initial page.

@@ -17,7 +17,8 @@ class ServiceForm extends React.Component {
       amount: props.service ? (props.service.amount / 100).toString() : '',
       createdAt: props.service ? moment(props.service.createdAt) : moment(),
       calendarFocused: false,
-      error: undefined
+      error: undefined,
+      backspace: false
     };
   }
 
@@ -30,16 +31,45 @@ class ServiceForm extends React.Component {
     const description = e.target.value;
     this.setState(() => ({ description }));
   }
-  onDescriptionChange2 = (e) => {
+
+  onDescKeyDown = (e) => {
+    const keyPressed = e.key;
     const description = e.target.value;
-   // const descArray = Object.keys(this.props.service).map((key) => this.props.service[key].description);
-    console.log(this.props.descArray);
-    const expr = /description/;
-    const foundItem = this.props.descArray.find((desc) => description.match(expr))
-    console.log(foundItem)
-    this.test.selectionStart = 1;
-    this.test.selectEnd = 2;
-    this.setState(() => ({ description }));
+    console.log(`descriptionOnKeyDown: ${description} -- Key: ${keyPressed}`);
+    console.log(e.target)
+
+    if (keyPressed === 'Backspace') {
+      this.setState((prevState) => ({backspace: true}))
+    }
+  }
+  onDescriptionChange2 = (e) => {
+    //Get input value
+    //CHECK FOR this.state.backspace and if true, do something and set if back to false
+    const description = e.target.value;
+    console.log(`description: ${description}`);
+    //Setup match expression
+    const matchExpr = description.length > 0 ? '^' + description : /.^/;
+    console.log(`matchExpr: ${matchExpr}`);
+    //Create RegExp Object
+    const expr = new RegExp(matchExpr, 'ig');
+    //Try and Find a match in array of service descriptions
+    const foundItem = this.props.descArray.find((desc) => desc.match(expr));
+    console.log(`foundItem ${foundItem}`);
+    //If not found, return description, else return found item and set selection range
+    const finalValue = foundItem || description;
+    console.log(`finalValue: ${finalValue} -- length: ${finalValue.length}`);
+
+    const startPos = description.length;
+    const endPos = finalValue.length;
+    //this.test.setSelectionRange(1, 3);
+    this.setState(() => {
+        return ({ description: finalValue })
+      },
+      () => {this.test.setSelectionRange(startPos, endPos);}
+    );
+    // this.test.selectionStart = 1;
+    // console.log(description.length);
+    // this.test.selectEnd = foundItem.length;
   }
   onServiceProviderChange = (e) => {
     const serviceProvider = e.target.value;
@@ -89,7 +119,7 @@ class ServiceForm extends React.Component {
           {this.state.error && <p className="form__error">{this.state.error}</p>}
 
           <div className="input-group">
-            <select className="select" 
+            <select className="select"
               name="car" onChange={this.onCarChange} value={this.state.carId}>
               {this.props.cars.map(car => (
                 <option key={car.id} value={car.id}>{car.nickName}</option>
@@ -112,7 +142,7 @@ class ServiceForm extends React.Component {
             />
           </div>
           <div className="input-group">
-           
+
             <input
               className="text-input"
               type="text"
@@ -124,11 +154,12 @@ class ServiceForm extends React.Component {
             <input
               className="text-input"
               type="text"
-              placeholder="Description"
+              placeholder="Description2"
               autoFocus
               ref={(input) => this.test = input}
               value={this.state.description}
               onChange={this.onDescriptionChange2}
+              onKeyDown={this.onDescKeyDown}
             />
             <input
               className="text-input"
