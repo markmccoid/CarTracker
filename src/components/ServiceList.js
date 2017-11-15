@@ -20,8 +20,11 @@ const ServiceList = props => (
       </div>
       :
       props.services.map((service) => {
-      return <ServiceListItem key={service.id} {...service} carNickName={props.cars.find(car => car.id === service.carId).nickName}/>
-    })}
+      return (<ServiceListItem 
+                key={service.id} {...service} 
+                carNickName={props.cars.find(car => car.id === service.carId).nickName}
+              />);
+    })};
 
   </div>
 );

@@ -27,26 +27,27 @@ class ServiceForm extends React.Component {
     this.setState(() => ({ carId }));
   }
 
-  onDescriptionChange = (e) => {
-    const description = e.target.value;
-    this.setState(() => ({ description }));
-  }
-
-  onDescKeyDown = (e) => {
+    onKeyDown = (e) => {
     const keyPressed = e.key;
     const description = e.target.value;
-    console.log(`descriptionOnKeyDown: ${description} -- Key: ${keyPressed}`);
-    console.log(e.target)
-
-    if (keyPressed === 'Backspace') {
+    //Check if Backspace or Delete
+    if (keyPressed === 'Backspace' || keyPressed === 'Delete') {
       this.setState((prevState) => ({backspace: true}))
     }
   }
-  onDescriptionChange2 = (e) => {
+  onDescriptionChange = (e) => {
     //Get input value
-    //CHECK FOR this.state.backspace and if true, do something and set if back to false
+    //CHECK FOR this.state.backspace and if true, set state to target.value passed
+    // and set backspace to false
     const description = e.target.value;
     console.log(`description: ${description}`);
+    if (this.state.backspace) {
+      return this.setState(() => ({ 
+          description,
+          backspace: false 
+        })
+      );
+    }
     //Setup match expression
     const matchExpr = description.length > 0 ? '^' + description : /.^/;
     console.log(`matchExpr: ${matchExpr}`);
@@ -63,17 +64,55 @@ class ServiceForm extends React.Component {
     const endPos = finalValue.length;
     //this.test.setSelectionRange(1, 3);
     this.setState(() => {
-        return ({ description: finalValue })
+        return ({ 
+          description: finalValue
+        })
       },
-      () => {this.test.setSelectionRange(startPos, endPos);}
+      () => {
+        if (foundItem) {
+          this.descInput.setSelectionRange(startPos, endPos);
+        }
+      }
     );
     // this.test.selectionStart = 1;
     // console.log(description.length);
     // this.test.selectEnd = foundItem.length;
   }
   onServiceProviderChange = (e) => {
+    //Get input value
+
     const serviceProvider = e.target.value;
-    this.setState(() => ({ serviceProvider }));
+    //CHECK FOR this.state.backspace and if true, set state to target.value passed
+    // and set backspace to false
+    if (this.state.backspace) {
+      return this.setState(() => ({ 
+          serviceProvider,
+          backspace: false 
+        })
+      );
+    }
+    //Setup match expression
+    const matchExpr = serviceProvider.length > 0 ? '^' + serviceProvider : /.^/;
+    //Create RegExp Object
+    const expr = new RegExp(matchExpr, 'ig');
+    //Try and Find a match in array of service descriptions
+    const foundItem = this.props.serviceArray.find((service) => service.match(expr));
+    //If not found, return description, else return found item and set selection range
+    const finalValue = foundItem || serviceProvider;
+    const startPos = serviceProvider.length;
+    const endPos = finalValue.length;
+    //this.test.setSelectionRange(1, 3);
+    this.setState(() => {
+        return ({ 
+          serviceProvider: finalValue
+        })
+      },
+      () => {
+        if (foundItem) {
+          this.serviceInput.setSelectionRange(startPos, endPos);
+        }
+      }
+    );
   }
   onNoteChange = (e) => {
     const note = e.target.value;
@@ -142,31 +181,24 @@ class ServiceForm extends React.Component {
             />
           </div>
           <div className="input-group">
-
             <input
               className="text-input"
               type="text"
               placeholder="Description"
               autoFocus
+              ref={(input) => this.descInput = input}
               value={this.state.description}
               onChange={this.onDescriptionChange}
-            />
-            <input
-              className="text-input"
-              type="text"
-              placeholder="Description2"
-              autoFocus
-              ref={(input) => this.test = input}
-              value={this.state.description}
-              onChange={this.onDescriptionChange2}
-              onKeyDown={this.onDescKeyDown}
+              onKeyDown={this.onKeyDown}
             />
             <input
               className="text-input"
               type="text"
               placeholder="Service Provider"
+              ref={(input) => this.serviceInput = input}
               value={this.state.serviceProvider}
               onChange={this.onServiceProviderChange}
+              onKeyDown={this.onKeyDown}
             />
           </div>
           <div className="input-group">

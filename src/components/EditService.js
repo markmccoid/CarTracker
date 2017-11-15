@@ -14,6 +14,8 @@ const EditService = (props) => {
       </div>
       <div className="content-container">
         <ServiceForm
+          descArray={props.descArray}
+          serviceArray={props.serviceArray}
           onSubmit={(serviceObj) => {
               props.dispatch(startEditService(props.match.params.id, serviceObj));
               props.history.push('/');
@@ -39,7 +41,9 @@ const EditService = (props) => {
 const mapStateToProps = (state, props) => {
   return {
     service: state.services.find(service => service.id === props.match.params.id),
-    cars: state.cars
+    cars: state.cars,
+    descArray: Object.keys(state.services).map((key) => state.services[key].description),
+    serviceArray: Object.keys(state.services).map((key) => state.services[key].serviceProvider),
   };
 };
 

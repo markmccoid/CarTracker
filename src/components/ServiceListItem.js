@@ -22,10 +22,14 @@ const DateStyle = styled.span`
   font-size: 1.1rem;
   font-style: italic;
 `;
-
+const DeleteButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
 const ServiceListItem = (props) => {
   return (
-    <Link className="list-item" to={`/edit/${props.id}`}>
+    <Link className="list-item" style={{position: "relative"}}to={`/edit/${props.id}`}>
       <ListLeft>
         <h3 className="list-item__title">{props.description} -
           <DateStyle> {moment(props.createdAt).format('MMM Do, YYYY')}</DateStyle>
@@ -40,7 +44,9 @@ const ServiceListItem = (props) => {
       <ListRight>
         <h3>{numeral(props.amount / 100).format('$0,0.00')}</h3>
       </ListRight>
-
+      <DeleteButton>
+      Delete
+      </DeleteButton>
     </Link>
   );
 };
