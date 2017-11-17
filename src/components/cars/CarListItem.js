@@ -15,20 +15,37 @@ const Field = styled.div`
   margin: 10px;
 `;
 const CarInfo = styled.div`
+  font-family: 'Exo 2', sans-serif;
   font-size: 1.2rem;
   font-weight: 500;
+`;
+const Label = styled.div`
+  font-family: 'Exo 2', sans-serif;
+  margin: 15px 0;
+`;
+const LicensePlateVin = styled.span`
+  padding 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 15rem;
+  text-align: center;
 `;
 const FlexRight = styled.div`
   display: flex;
   justify-content: flex-end;
-`
+`;
 
 const CarListItem = (props) => {
   return (
       <Wrapper>
         <Field>
-          <CarInfo>{props.car.nickName} - {props.car.year} {props.car.make} {props.car.model}</CarInfo>
-          <CarInfo>{props.car.licensePlate} - {props.car.VIN}</CarInfo>
+          <CarInfo>
+            <div style={{fontSize: "1.8rem", marginBottom: "10px"}}>{props.car.nickName}</div> 
+            {props.car.year} {props.car.make} {props.car.model}</CarInfo>
+          <CarInfo>
+            <Label>Plate: <LicensePlateVin>{props.car.licensePlate}</LicensePlateVin> </Label>
+            <Label>VIN: <LicensePlateVin>{props.car.VIN}</LicensePlateVin></Label>
+          </CarInfo>
         </Field>
         <Field>
           <FlexRight>
