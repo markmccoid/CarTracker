@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { startLogin } from '../actions/auth';
+import LoginWithEmail from './LoginWithEmail';
 
 const Login = (props) => {
   return (
@@ -14,6 +15,7 @@ const Login = (props) => {
         >
         Login with Google
         </button>
+        <LoginWithEmail onEmailLogin={(email, password) => props.startLogin(email, password) } />
       </div>
     </div>
   );

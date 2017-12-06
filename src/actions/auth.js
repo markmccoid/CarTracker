@@ -8,9 +8,15 @@ export const login = uid => ({
 
 //--The "onAuthStateChanged" listener will handle dispatching
 //--the login action creator.
-export const startLogin = () => {
+export const startLogin = (email = undefined, password = undefined) => {
   return (dispatch) => {
-    firebase.auth().signInWithPopup(googleAuthProvider);
+    //If no email passed, then login with google
+    if (!email) {
+      firebase.auth().signInWithPopup(googleAuthProvider);
+    } else {
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(err => console.log(`Error logging in with Email: ${email} and Password: ${password} --- ${err}`));
+    }
   };
 };
 
