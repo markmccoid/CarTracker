@@ -23,7 +23,7 @@ class ServiceForm extends React.Component {
   }
 
   onCarChange = (e) => {
-    const carId = e; //e.target.value;
+    const carId = e.target.value; //e.target.value;
     this.setState(() => ({ carId }));
   }
 
@@ -40,11 +40,10 @@ class ServiceForm extends React.Component {
     //CHECK FOR this.state.backspace and if true, set state to target.value passed
     // and set backspace to false
     const description = e.target.value;
-    console.log(`description: ${description}`);
     if (this.state.backspace) {
-      return this.setState(() => ({ 
+      return this.setState(() => ({
           description,
-          backspace: false 
+          backspace: false
         })
       );
     }
@@ -64,7 +63,7 @@ class ServiceForm extends React.Component {
     const endPos = finalValue.length;
     //this.test.setSelectionRange(1, 3);
     this.setState(() => {
-        return ({ 
+        return ({
           description: finalValue
         })
       },
@@ -85,9 +84,9 @@ class ServiceForm extends React.Component {
     //CHECK FOR this.state.backspace and if true, set state to target.value passed
     // and set backspace to false
     if (this.state.backspace) {
-      return this.setState(() => ({ 
+      return this.setState(() => ({
           serviceProvider,
-          backspace: false 
+          backspace: false
         })
       );
     }
@@ -103,7 +102,7 @@ class ServiceForm extends React.Component {
     const endPos = finalValue.length;
     //this.test.setSelectionRange(1, 3);
     this.setState(() => {
-        return ({ 
+        return ({
           serviceProvider: finalValue
         })
       },
@@ -161,7 +160,7 @@ class ServiceForm extends React.Component {
             <select className="select"
               name="car" onChange={this.onCarChange} value={this.state.carId}>
               {this.props.cars.map(car => (
-                <option key={car.id} value={car.id}>{car.nickName}</option>
+                <option key={car.nickName} value={car.id}>{car.nickName}</option>
               ))}
             </select>
             <SingleDatePicker

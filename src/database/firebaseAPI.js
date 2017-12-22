@@ -52,7 +52,8 @@ export const loadCars = uid => database.ref(`users/${uid}/cars`).once('value')
 //============================================
 // ADD SERVICE
 export const addService = (uid, serviceObj) => database.ref(`users/${uid}/services`).push(serviceObj)
-  .then(ref => ref.key);
+  .then(ref => ref.key)
+  .catch(err => console.log(`AddService Error: ${err}`));
 
 // REMOVE SERVICE
 export const removeService = (uid, id) => database.ref(`users/${uid}/services/${id}`).remove();
