@@ -15,6 +15,7 @@ export const addService = (serviceObj) => {
 
 export const startAddService = (serviceObj) => {
   return (dispatch, getState) => {
+    console.log('reducer', serviceObj);
     const { uid } = getState().auth;
     databaseAPI.addService(uid, serviceObj)
       .then(serviceId => dispatch(addService({

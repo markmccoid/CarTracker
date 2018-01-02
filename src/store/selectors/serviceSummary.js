@@ -3,7 +3,7 @@ import moment from 'moment';
 import { formatAmount } from '../../helpers';
 
 //================================================
-//- Get passed in the visible services returns 
+//- Get passed in the visible services returns
 //- following object:
 /* {
     totalAmount,
@@ -16,16 +16,16 @@ export const serviceSummary = (services = []) => {
     return {};
   }
   //Find the total amount of the visible services
-  const totalAmount = formatAmount(services.reduce((sum, value) => sum + value.amount, 0));
+  const totalAmount = formatAmount(services.reduce((sum, value) => sum + value.serviceCost, 0));
   //Find last oil change
-  let oilChanges = services.filter(service => service.description.toLowerCase().includes('oil'));
+  let oilChanges = services.filter(service => service.serviceDescription.toLowerCase().includes('oil'));
   //sort desc by created at date and grab the first entry in the array
-  let lastOilChangeObj = _.orderBy(oilChanges, ['createdAt'], ['desc'])[0];
+  let lastOilChangeObj = _.orderBy(oilChanges, ['serviceCost'], ['serviceDescription'])[0];
   return {
     totalAmount,
     lastOilChange: {
       carNickName: lastOilChangeObj.carId,
-      serviceDate: moment(lastOilChangeObj.createdAt).format('MMM Do YYYY')
+      serviceDate: moment(lastOilChangeObj.serviceCost).format('MMM Do YYYY')
     }
   };
 };

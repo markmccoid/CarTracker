@@ -14,16 +14,16 @@ export default (services = [], { text, carFilterId = '', sortBy, startDate, endD
   //-------------------------------------------
   return services.filter((service) => {
     //-Take the Unix createAt date and conver to a moment object (easier to deal with.)
-    const createdAtMoment = moment(service.createdAt);
+    const serviceDateMoment = moment(service.serviceDate);
 
     //-Check CarId in service for match
     const carMatch = service.carId === carFilterId || carFilterId === '';
     //-Check is text in filter is included in description
-    const textMatch = service.description.toLowerCase().includes(text.toLowerCase());
+    const textMatch = service.serviceDescription.toLowerCase().includes(text.toLowerCase());
     //-Check the if the startDate is <= to createdAt
-    const startDateMatch = startDate ? startDate.isSameOrBefore(createdAtMoment, 'day') : true;
+    const startDateMatch = startDate ? startDate.isSameOrBefore(serviceDateMoment, 'day') : true;
     //-Check the if the endDate is >= to createdAt
-    const endDateMatch = endDate ? endDate.isSameOrAfter(createdAtMoment, 'day') : true;
+    const endDateMatch = endDate ? endDate.isSameOrAfter(serviceDateMoment, 'day') : true;
 
     //only return true (i.e. include in output) if all match criteria are met
     return carMatch && textMatch && startDateMatch && endDateMatch;

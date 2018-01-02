@@ -25,7 +25,7 @@ const AddService = props => (
   </div>);
 
 const mapStateToProps = state => ({
-  descArray: Object.keys(state.services).map((key) => state.services[key].description),
+  descArray: Object.keys(state.services).map((key) => state.services[key].serviceDescription),
   serviceArray: Object.keys(state.services).map((key) => state.services[key].serviceProvider),
   cars: state.cars
 });

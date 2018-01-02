@@ -31,18 +31,18 @@ const ServiceListItem = (props) => {
   return (
     <Link className="list-item" style={{position: "relative"}}to={`/edit/${props.id}`}>
       <ListLeft>
-        <h3 className="list-item__title">{props.description} -
-          <DateStyle> {moment(props.createdAt).format('MMM Do, YYYY')}</DateStyle>
+        <h3 className="list-item__title">{props.serviceDescription} -
+          <DateStyle> {moment(props.serviceDate).format('MMM Do, YYYY')}</DateStyle>
         </h3>
         <div><strong>Service Provider: </strong> <span className="list-item__subtitle">{props.serviceProvider}</span></div>
         <div><strong>Car: </strong> <span className="list-item__subtitle">{props.carNickName}</span></div>
       </ListLeft>
       <ListNote>
-        <span>{props.note}</span>
+        <span>{props.serviceNote}</span>
       </ListNote>
 
       <ListRight>
-        <h3>{numeral(props.amount / 100).format('$0,0.00')}</h3>
+        <h3>{numeral(props.serviceCost / 100).format('$0,0.00')}</h3>
       </ListRight>
       <DeleteButton>
       Delete

@@ -11,11 +11,11 @@ class ServiceForm extends React.Component {
     super(props);
     this.state = {
       carId: props.service ? props.service.carId : props.cars.length > 0 ? props.cars[0].id : 0,
-      description: props.service ? props.service.description : '',
+      serviceDescription: props.service ? props.service.serviceDescription : '',
       serviceProvider: props.service ? props.service.serviceProvider || '' : '',
-      note: props.service ? props.service.note : '',
-      amount: props.service ? (props.service.amount / 100).toString() : '',
-      createdAt: props.service ? moment(props.service.createdAt) : moment(),
+      serviceNote: props.service ? props.service.serviceNote : '',
+      serviceCost: props.service ? (props.service.serviceCost / 100).toString() : '',
+      serviceDate: props.service ? moment(props.service.serviceDate) : moment(),
       calendarFocused: false,
       error: undefined,
       backspace: false
@@ -27,7 +27,7 @@ class ServiceForm extends React.Component {
     this.setState(() => ({ carId }));
   }
 
-    onKeyDown = (e) => {
+  onKeyDown = (e) => {
     const keyPressed = e.key;
     const description = e.target.value;
     //Check if Backspace or Delete
@@ -39,32 +39,33 @@ class ServiceForm extends React.Component {
     //Get input value
     //CHECK FOR this.state.backspace and if true, set state to target.value passed
     // and set backspace to false
-    const description = e.target.value;
+    const serviceDescription = e.target.value;
+
     if (this.state.backspace) {
       return this.setState(() => ({
-          description,
+          serviceDescription,
           backspace: false
         })
       );
     }
     //Setup match expression
-    const matchExpr = description.length > 0 ? '^' + description : /.^/;
+    const matchExpr = serviceDescription.length > 0 ? '^' + serviceDescription : /.^/;
     console.log(`matchExpr: ${matchExpr}`);
     //Create RegExp Object
     const expr = new RegExp(matchExpr, 'ig');
-    //Try and Find a match in array of service descriptions
+    //Try and Find a match in array of service serviceDescriptions
     const foundItem = this.props.descArray.find((desc) => desc.match(expr));
     console.log(`foundItem ${foundItem}`);
-    //If not found, return description, else return found item and set selection range
-    const finalValue = foundItem || description;
+    //If not found, return serviceDescription, else return found item and set selection range
+    const finalValue = foundItem || serviceDescription;
     console.log(`finalValue: ${finalValue} -- length: ${finalValue.length}`);
 
-    const startPos = description.length;
+    const startPos = serviceDescription.length;
     const endPos = finalValue.length;
     //this.test.setSelectionRange(1, 3);
     this.setState(() => {
         return ({
-          description: finalValue
+          serviceDescription: finalValue
         })
       },
       () => {
@@ -114,18 +115,18 @@ class ServiceForm extends React.Component {
     );
   }
   onNoteChange = (e) => {
-    const note = e.target.value;
-    this.setState(() => ({ note }));
+    const serviceNote = e.target.value;
+    this.setState(() => ({ serviceNote }));
   }
   onAmountChange = (e) => {
-    const amount = e.target.value;
-    if (!amount || amount.match(/^\d*(\.\d{0,2})?$/)) {
-      this.setState(() => ({ amount }));
+    const serviceCost = e.target.value;
+    if (!serviceCost || serviceCost.match(/^\d*(\.\d{0,2})?$/)) {
+      this.setState(() => ({ serviceCost }));
     }
   }
-  onDateChange = (createdAt) => {
-    if (createdAt) {
-      this.setState(() => ({ createdAt }));
+  onDateChange = (serviceDate) => {
+    if (serviceDate) {
+      this.setState(() => ({ serviceDate }));
     }
   }
 
@@ -135,23 +136,25 @@ class ServiceForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.description || !this.state.amount) {
+    if (!this.state.serviceDescription || !this.state.serviceCost) {
       this.setState(() => ({ error: 'Please enter a description and an amount' }));
     } else {
       this.setState(() => ({ error: undefined }));
       const serviceObj = {
-        description: this.state.description,
-        amount: parseFloat(this.state.amount, 10) * 100,
-        note: this.state.note,
+        serviceDescription: this.state.serviceDescription,
+        serviceCost: parseFloat(this.state.serviceCost, 10) * 100,
+        serviceNote: this.state.serviceNote,
         serviceProvider: this.state.serviceProvider,
-        createdAt: this.state.createdAt.valueOf(),
+        serviceDate: this.state.serviceDate.valueOf(),
         carId: this.state.carId
       };
-      this.props.onSubmit(serviceObj);
       console.log('submitted', serviceObj);
+      this.props.onSubmit(serviceObj);
+
     }
   }
   render() {
+    console.log(this.props.cars, this.state.carId)
     return (
         <form className="form" onSubmit={this.onSubmit}>
           {this.state.error && <p className="form__error">{this.state.error}</p>}
@@ -164,7 +167,7 @@ class ServiceForm extends React.Component {
               ))}
             </select>
             <SingleDatePicker
-              date={this.state.createdAt}
+              date={this.state.serviceDate}
               onDateChange={this.onDateChange}
               focused={this.state.calendarFocused}
               onFocusChange={this.onFocusChange}
@@ -175,7 +178,7 @@ class ServiceForm extends React.Component {
               className="text-input"
               type="text"
               placeholder="amount"
-              value={this.state.amount}
+              value={this.state.serviceCost}
               onChange={this.onAmountChange}
             />
           </div>
@@ -186,7 +189,7 @@ class ServiceForm extends React.Component {
               placeholder="Description"
               autoFocus
               ref={(input) => this.descInput = input}
-              value={this.state.description}
+              value={this.state.serviceDescription}
               onChange={this.onDescriptionChange}
               onKeyDown={this.onKeyDown}
             />
@@ -204,7 +207,7 @@ class ServiceForm extends React.Component {
             <textarea
               className="textarea"
               placeholder="add a note"
-              value={this.state.note}
+              value={this.state.serviceNote}
               onChange={this.onNoteChange}
             />
           </div>
